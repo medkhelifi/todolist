@@ -17,9 +17,27 @@
         <property name="password" value="${database.password}"/>
     </bean>
 
+    <!-- SESSION FACTORY -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="mysqlDatasource"/>
+        <property name="annotatedClasses">
+            <list>
+                <value>com.medkhelifi.tutorials.todolist.models.entities.Role</value>
+                <value>com.medkhelifi.tutorials.todolist.models.entities.User</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.connection.url">jdbc:mysql://localhost:3306/todolist</prop>
+                <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
+            </props>
+        </property>
+    </bean>
+
     <!--        LIQUIBASE CHANGELOG             -->
     <bean id="liquibase" class="liquibase.integration.spring.SpringLiquibase">
         <property name="dataSource" ref="mysqlDatasource"/>
         <property name="changeLog" value="classpath:liquibase/db-changelog.xml"/>
     </bean>
+
 </beans>

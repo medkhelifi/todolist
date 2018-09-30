@@ -5,6 +5,8 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <!-- CREATE ROLE TABLE -->
     <changeSet id="001" author="medKhelifi">
         <createTable tableName="role">
             <column name="id" type="int" autoIncrement="true">
@@ -17,6 +19,7 @@
         <comment>Create User's Role Table</comment>
     </changeSet>
 
+    <!-- INSERT ROLE DEFAULT DATA -->
     <changeSet id="002" author="medKhelifi">
         <insert tableName="role">
             <column name="name" value="ADMIN"/>
@@ -26,6 +29,7 @@
         </insert>
     </changeSet>
 
+    <!-- CREATE USER TABLE -->
     <changeSet id="003" author="medKhelifi">
         <createTable tableName="user">
             <column name="id" type="int" autoIncrement="true">
@@ -44,6 +48,22 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+    </changeSet>
+
+    <!-- ADD USER ROLE COLUMN -->
+    <changeSet id="004" author="medKhelifi">
+        <addColumn tableName="user">
+            <column name="role_id" type="int">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+        <addForeignKeyConstraint baseColumnNames="role_id"
+                                 constraintName="fk_role_id"
+                                 baseTableName="user"
+                                 referencedColumnNames="id"
+                                 referencedTableName="role"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
     </changeSet>
 
 </databaseChangeLog>
