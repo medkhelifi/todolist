@@ -14,6 +14,7 @@
         <org.springframework>5.0.5.RELEASE</org.springframework>
         <org.springframework.security>4.0.4.RELEASE</org.springframework.security>
         <mysql.connector.version>8.0.12</mysql.connector.version>
+        <org.hibernate>5.2.16.Final</org.hibernate>
 
     </properties>
 
@@ -81,6 +82,12 @@
         <!--            SPRING SECURITY                   -->
 
         <!--            HIBERNATE                         -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${org.hibernate}</version>
+        </dependency>
+
         <!--            JUNIT                             -->
 
         <!--            MYSQL                             -->
