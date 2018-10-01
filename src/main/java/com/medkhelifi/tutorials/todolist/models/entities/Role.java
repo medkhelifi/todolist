@@ -12,7 +12,7 @@ public class Role {
     private Collection<User> usersById;
 
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id", nullable = false, insertable = false, updatable = false)
     public int getId() {
         return id;
     }

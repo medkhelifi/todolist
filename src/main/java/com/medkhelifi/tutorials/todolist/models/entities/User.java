@@ -13,7 +13,7 @@ public class User {
     private Role roleByRoleId;
 
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id", nullable = false, insertable = false, updatable = false)
     public int getId() {
         return id;
     }
@@ -89,7 +89,7 @@ public class User {
     }
 
     @Basic
-    @Column(name = "role_id", nullable = true)
+    @Column(name = "role_id", nullable = true, insertable = false, updatable = false)
     public Integer getRoleId() {
         return roleId;
     }
