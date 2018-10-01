@@ -10,7 +10,7 @@
     <context:property-placeholder location="classpath:db/database.properties"/>
 
     <!--        DATASOURCE                      -->
-    <bean name="mysqlDatasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <bean name="mySqlDatasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="${database.driver}"/>
         <property name="url" value="${database.url}"/>
         <property name="username" value="${database.username}"/>
@@ -19,7 +19,7 @@
 
     <!-- SESSION FACTORY -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
-        <property name="dataSource" ref="mysqlDatasource"/>
+        <property name="dataSource" ref="mySqlDatasource"/>
         <property name="annotatedClasses">
             <list>
                 <value>com.medkhelifi.tutorials.todolist.models.entities.Role</value>
@@ -28,15 +28,26 @@
         </property>
         <property name="hibernateProperties">
             <props>
-                <prop key="hibernate.connection.url">jdbc:mysql://localhost:3306/todolist</prop>
-                <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
+                <prop key="hibernate.dialect"> org.hibernate.dialect.MySQL5Dialect </prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.show_sql">true</prop>
             </props>
         </property>
     </bean>
 
+    <!--        DAO BEANS                       -->
+    <bean id="useDao" class="com.medkhelifi.tutorials.todolist.models.dao.impl.UserDaoImp">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <!--        SERVICES                        -->
+    <bean id="myUserDetailsService" class="com.medkhelifi.tutorials.todolist.services.MyUserDetailsService">
+
+    </bean>
+
     <!--        LIQUIBASE CHANGELOG             -->
     <bean id="liquibase" class="liquibase.integration.spring.SpringLiquibase">
-        <property name="dataSource" ref="mysqlDatasource"/>
+        <property name="dataSource" ref="mySqlDatasource"/>
         <property name="changeLog" value="classpath:liquibase/db-changelog.xml"/>
     </bean>
 
