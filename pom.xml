@@ -11,10 +11,10 @@
 
     <properties>
         <com.sun.faces.version>2.2.17</com.sun.faces.version>
-        <org.springframework>5.0.5.RELEASE</org.springframework>
+        <org.springframework>4.0.4.RELEASE</org.springframework>
         <org.springframework.security>4.0.4.RELEASE</org.springframework.security>
         <mysql.connector.version>8.0.12</mysql.connector.version>
-        <org.hibernate>5.2.16.Final</org.hibernate>
+        <org.hibernate>4.2.2.Final</org.hibernate>
 
     </properties>
 
@@ -82,6 +82,13 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
         </dependency>
+
+        <!--            SPRING ASPECTS                    -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
+        </dependency>
+
 
         <!--            SPRING SECURITY                   -->
         <dependency>

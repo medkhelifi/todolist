@@ -12,18 +12,25 @@
 
         <intercept-url pattern="/**" access="isAuthenticated()" />
 
-        <form-login login-page="/login.xhtml"  authentication-failure-url="/login.xhtml?error=true" default-target-url="/index.xhtml"/>
-        <logout logout-success-url="/login.xhtml?logout=true"/>
 
-        <csrf/>
+        <!-- access denied page -->
+        <access-denied-handler error-page="/403" />
+        <form-login
+                login-page="/login.xhtml"
+                default-target-url="/welcome"
+                authentication-failure-url="/login.xhtml?error"
+                login-processing-url="/j_spring_security_check"
+                username-parameter="input_username"
+                password-parameter="input_password" />
+        <logout logout-success-url="/login.xhtml?logout" />
+        <!-- enable csrf protection -->
+        <csrf />
 
     </http>
 
     <authentication-manager>
-        <authentication-provider>
-            <user-service>
-                <user name="admin" password="123456" authorities="ROLE_USER" />
-            </user-service>
+        <authentication-provider user-service-ref="myUserDetailsService">
+            <password-encoder hash="bcrypt"/>
         </authentication-provider>
     </authentication-manager>
 

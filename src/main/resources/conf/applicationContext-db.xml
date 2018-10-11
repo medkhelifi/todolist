@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                         http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
                         http://www.springframework.org/schema/context
-                        http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+                        http://www.springframework.org/schema/context/spring-context-3.1.xsd
+                        http://www.springframework.org/schema/aop
+                        http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+                        http://www.springframework.org/schema/tx
+                        http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
     <context:property-placeholder location="classpath:db/database.properties"/>
 
@@ -18,7 +24,7 @@
     </bean>
 
     <!-- SESSION FACTORY -->
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="mySqlDatasource"/>
         <property name="annotatedClasses">
             <list>
@@ -42,7 +48,7 @@
 
     <!--        SERVICES                        -->
     <bean id="myUserDetailsService" class="com.medkhelifi.tutorials.todolist.services.MyUserDetailsService">
-
+        <property name="userDao" ref="useDao"/>
     </bean>
 
     <!--        LIQUIBASE CHANGELOG             -->
@@ -50,5 +56,32 @@
         <property name="dataSource" ref="mySqlDatasource"/>
         <property name="changeLog" value="classpath:liquibase/db-changelog.xml"/>
     </bean>
+
+    <!-- MUST have transaction manager, using aop and aspects  -->
+
+    <!--
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="get*" read-only="true" />
+            <tx:method name="find*" read-only="true" />
+            <tx:method name="*" />
+        </tx:attributes>
+    </tx:advice>
+    <aop:config>
+        <aop:pointcut id="userServicePointCut"
+                      expression="execution(* com.medkhelifi.tutorials.todolist.*Services.*(..))" />
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="userServicePointCut" />
+    </aop:config>
+    -->
+
+    <tx:annotation-driven transaction-manager="transactionManager" />
+    <bean id="transactionManager"
+          class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
 
 </beans>

@@ -19,9 +19,13 @@
 <h:body>
     <ui:composition template="templates/layout.xhtml">
         <ui:define name="content">
-            <h:form styleClass="form-signin" prependId="false">
+            <h:form styleClass="form-signin" prependId="false" >
+                <input type="hidden"
+                       name="${_csrf.parameterName}"
+                       value="${_csrf.token}" />
+
                 <h2 class="form-signin-heading">Please sign in Here Choukran</h2>
-                <b:inputText id="email" placeholder="Email address" >
+                <b:inputText id="username" placeholder="Email address" >
                     <f:facet name="prepend">
                         <b:icon name="user" />
                     </f:facet>
@@ -32,7 +36,7 @@
                     </f:facet>
                 </b:inputText>
                 <b:selectBooleanCheckbox value="true" caption="remember me"/>
-                <b:commandButton look="primary btn-block" value="Sign In" icon="log-in" size="lg"/>
+                <b:commandButton look="primary btn-block" value="Sign In" icon="log-in" size="lg" action="${loginManager.doLoging()}"/>
             </h:form>
         </ui:define>
     </ui:composition>
