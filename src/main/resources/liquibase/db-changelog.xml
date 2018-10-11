@@ -66,4 +66,15 @@
                                  onUpdate="CASCADE"/>
     </changeSet>
 
+    <!-- ADD USER ROLE -->
+    <changeSet id="005" author="medKhelifi">
+        <insert tableName="user">
+            <column name="username" value="admin"></column>
+            <column name="firstname" value="Mohamed"/>
+            <column name="lastname" value="KHELIFI"/>
+            <column name="password" value="$2a$10$04TVADrR6/SPLBjsK0N30.Jf5fNjBugSACeGv1S69dZALR7lSov0y"/>
+            <column name="role_id" value="1"/>
+        </insert>
+    </changeSet>
+
 </databaseChangeLog>
