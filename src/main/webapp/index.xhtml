@@ -17,7 +17,6 @@
                     <b:navbarLinks pull="right" styleClass="hidden-xs">
                         <h:form  prependId="false">
                             <b:dropMenu value="#{authenticationFacade.getAuthenticatedFacade().firstname} #{authenticationFacade.getAuthenticatedFacade().lastname}">
-                                <b:navLink value="Logout" action="#{loginManager.doLogout()}"/>
                                 <b:navCommandLink value="Logout" action="#{loginManager.doLogout()}"/>
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                             </b:dropMenu>
