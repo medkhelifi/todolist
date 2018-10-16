@@ -1,25 +1,30 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:b="http://bootsfaces.net/ui"
-        >
+      xmlns:f="http://java.sun.com/jsf/core">
 
 
 <h:body>
     <ui:composition template="templates/layout.xhtml">
         <ui:define name="content">
             <b:row>
-                <b:column>
-                    <b:alert severity="success"><strong>Well done!</strong> You successfully read this important alert message.</b:alert>
-                    <b:alert severity="info"><strong>Heads up!</strong> This alert needs your attention, but it's not super important. </b:alert>
-                    <b:alert severity="warning"><strong>Warning!</strong> Best check yo self, you're not looking too good. </b:alert>
-                    <b:alert severity="danger"><strong>Oh snap!</strong> Change a few things up and try submitting again. </b:alert>
-                    <b:alert severity="info" title="Heads up!" value="This alert needs your attention, but it's not super important." />                </b:column>
-            </b:row>
+                <b:navBar brand="Brand" brandHref="#" fluid="true">
 
+                <b:navbarLinks pull="right"><b:navLink value="    " href="#"></b:navLink></b:navbarLinks>
+                    <b:navbarLinks pull="right" styleClass="hidden-xs">
+                        <h:form  prependId="false">
+                            <b:dropMenu value="#{authenticationFacade.getAuthenticatedFacade().firstname} #{authenticationFacade.getAuthenticatedFacade().lastname}">
+                                <b:navLink value="Logout" action="#{loginManager.doLogout()}"/>
+                                <b:navCommandLink value="Logout" action="#{loginManager.doLogout()}"/>
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                            </b:dropMenu>
+                        </h:form>
+                    </b:navbarLinks>
+                </b:navBar>
+            </b:row>
         </ui:define>
     </ui:composition>
 </h:body>

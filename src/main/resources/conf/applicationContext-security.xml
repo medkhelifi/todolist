@@ -17,14 +17,16 @@
         <access-denied-handler error-page="/403" />
         <form-login
                 login-page="/login.xhtml"
-                default-target-url="/welcome"
+                default-target-url="/index.xhtml"
                 authentication-failure-url="/login.xhtml?error"
                 login-processing-url="/j_spring_security_check"
                 username-parameter="input_username"
                 password-parameter="input_password" />
-        <logout logout-success-url="/login.xhtml?logout" />
+        <logout
+                logout-success-url="/login.xhtml"
+        />
         <!-- enable csrf protection -->
-        <csrf />
+        <csrf disabled="false" />
 
     </http>
 

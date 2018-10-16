@@ -42,13 +42,13 @@
     </bean>
 
     <!--        DAO BEANS                       -->
-    <bean id="useDao" class="com.medkhelifi.tutorials.todolist.models.dao.impl.UserDaoImp">
+    <bean id="userDao" class="com.medkhelifi.tutorials.todolist.models.dao.impl.UserDaoImp">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
     <!--        SERVICES                        -->
     <bean id="myUserDetailsService" class="com.medkhelifi.tutorials.todolist.services.MyUserDetailsService">
-        <property name="userDao" ref="useDao"/>
+        <property name="userDao" ref="userDao"/>
     </bean>
 
     <!--        LIQUIBASE CHANGELOG             -->
@@ -58,25 +58,6 @@
     </bean>
 
     <!-- MUST have transaction manager, using aop and aspects  -->
-
-    <!--
-    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
-    <tx:advice id="txAdvice" transaction-manager="transactionManager">
-        <tx:attributes>
-            <tx:method name="get*" read-only="true" />
-            <tx:method name="find*" read-only="true" />
-            <tx:method name="*" />
-        </tx:attributes>
-    </tx:advice>
-    <aop:config>
-        <aop:pointcut id="userServicePointCut"
-                      expression="execution(* com.medkhelifi.tutorials.todolist.*Services.*(..))" />
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="userServicePointCut" />
-    </aop:config>
-    -->
-
     <tx:annotation-driven transaction-manager="transactionManager" />
     <bean id="transactionManager"
           class="org.springframework.orm.hibernate4.HibernateTransactionManager">
