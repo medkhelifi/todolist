@@ -30,6 +30,7 @@
             <list>
                 <value>com.medkhelifi.tutorials.todolist.models.entities.Role</value>
                 <value>com.medkhelifi.tutorials.todolist.models.entities.User</value>
+                <value>com.medkhelifi.tutorials.todolist.models.entities.Todo</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -42,13 +43,13 @@
     </bean>
 
     <!--        DAO BEANS                       -->
-    <bean id="userDao" class="com.medkhelifi.tutorials.todolist.models.dao.impl.UserDaoImp">
+    <bean id="userDao" class="com.medkhelifi.tutorials.todolist.models.dao.UserDao">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
     <!--        SERVICES                        -->
-    <bean id="myUserDetailsService" class="com.medkhelifi.tutorials.todolist.services.MyUserDetailsService">
-        <property name="userDao" ref="userDao"/>
+    <bean id="myUserDetailsService" class="com.medkhelifi.tutorials.todolist.services.CustomUserDetailsService">
+        <property name="IUserDao" ref="userDao"/>
     </bean>
 
     <!--        LIQUIBASE CHANGELOG             -->

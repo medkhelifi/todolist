@@ -15,7 +15,6 @@ import java.io.IOException;
 
 @ManagedBean
 @Controller
-//@RequestScoped
 @RequestMapping(value = "/")
 public class LoginManager {
 

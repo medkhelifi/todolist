@@ -12,17 +12,62 @@
         <ui:define name="content">
             <b:row>
                 <b:navBar brand="Brand" brandHref="#" fluid="true">
-
-                <b:navbarLinks pull="right"><b:navLink value="    " href="#"></b:navLink></b:navbarLinks>
+                <b:navbarLinks pull="right"><b:navLink value="    " href="#"/></b:navbarLinks>
                     <b:navbarLinks pull="right" styleClass="hidden-xs">
                         <h:form  prependId="false">
                             <b:dropMenu value="#{authenticationFacade.getAuthenticatedFacade().firstname} #{authenticationFacade.getAuthenticatedFacade().lastname}">
                                 <b:navCommandLink value="Logout" action="#{loginManager.doLogout()}"/>
-                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+
                             </b:dropMenu>
                         </h:form>
                     </b:navbarLinks>
                 </b:navBar>
+            </b:row>
+            <b:row>
+
+                <b:column colMd="6">
+                    <div class="todolist not-done">
+                        <h1>Todos</h1>
+                        <h:form>
+                            <b:inputText type="text" class="form-control add-todo" value="#{todoService.todo.title}" placeholder="Todo Title"/>
+                            <b:inputTextarea type="text" placeholder="Description" value="#{todoService.todo.description}"/>
+                            <b:dateTimePicker converter="localDateTimeConverter" format="YYYY-MM-DD HH-mm-ss" placeholder="todo Date" value="#{todoService.todo.dueDate}"/>
+
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                            <h:commandButton action="#{todoService.addTodoForCurrentUser()}" class="btn btn-success" value="Add"/>
+
+                        </h:form>
+
+                        <hr/>
+                        <ul class="list-unstyled" >
+                            <ui:repeat value="#{todoService.currentUserTodos}" var="todo"  >
+                                <h:panelGroup rendered="#{!todo.done}">
+                                    <li class="ui-state-default">
+                                        <div class="checkbox">
+                                            <label><input type="checkbox" value="" />#{todo.title}</label>
+                                        </div>
+                                    </li>
+                                </h:panelGroup>
+                            </ui:repeat>
+                        </ul>
+                        <div class="todo-footer">
+                            <strong><span class="count-todos"/></strong> Items Left
+                        </div>
+                    </div>
+                </b:column>
+                <b:column colMd="6">
+                    <div class="todolist">
+                        <h1>Already Done</h1>
+                        <ul id="done-items" class="list-unstyled">
+                            <ui:repeat value="#{todoService.currentUserTodos}" var="todo"  >
+                                <h:panelGroup rendered="#{todo.done}">
+                                    <li>#{todo.title} <button class="remove-item btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-remove"/></button></li>
+                                </h:panelGroup>
+                            </ui:repeat>
+                        </ul>
+
+                    </div>
+                </b:column>
             </b:row>
         </ui:define>
     </ui:composition>

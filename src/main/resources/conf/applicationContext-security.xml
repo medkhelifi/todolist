@@ -26,7 +26,7 @@
                 logout-success-url="/login.xhtml"
         />
         <!-- enable csrf protection -->
-        <csrf disabled="false" />
+        <csrf />
 
     </http>
 

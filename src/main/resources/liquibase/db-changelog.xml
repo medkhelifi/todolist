@@ -69,12 +69,48 @@
     <!-- ADD USER ROLE -->
     <changeSet id="005" author="medKhelifi">
         <insert tableName="user">
-            <column name="username" value="admin"></column>
+            <column name="username" value="admin"/>
             <column name="firstname" value="Mohamed"/>
             <column name="lastname" value="KHELIFI"/>
             <column name="password" value="$2a$10$04TVADrR6/SPLBjsK0N30.Jf5fNjBugSACeGv1S69dZALR7lSov0y"/>
             <column name="role_id" value="1"/>
         </insert>
+    </changeSet>
+
+    <!--    ADD TODOLIST TABLE  -->
+    <changeSet id="006" author="medKhelifi">
+        <createTable tableName="todo">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="varchar(150)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="text"/>
+            <column name="due_date" type="date"/>
+            <column name="done" type="boolean" defaultValue="false"/>
+        </createTable>
+    </changeSet>
+
+    <!--    ADD USER COLUMN TO TODOLIST -->
+    <changeSet id="007" author="medKhelifi">
+        <addColumn tableName="todo">
+            <column name="user_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="008" author="medKhelifi">
+        <addForeignKeyConstraint baseTableName="todo"
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_user_id"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"
+                                 onUpdate="CASCADE"
+                                 onDelete="CASCADE"/>
+    </changeSet>
+    <changeSet id="009" author="medKhelifi">
+        <modifyDataType tableName="todo" columnName="due_date" newDataType="datetime"/>
     </changeSet>
 
 </databaseChangeLog>
