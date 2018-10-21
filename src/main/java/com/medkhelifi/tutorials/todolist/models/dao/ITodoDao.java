@@ -13,4 +13,6 @@ public interface ITodoDao {
     void addTodo(Todo todo, User user);
 
     void addTodoForCurrentUser (Todo todo);
+
+    void changeTodoStatus(Todo todo);
 }

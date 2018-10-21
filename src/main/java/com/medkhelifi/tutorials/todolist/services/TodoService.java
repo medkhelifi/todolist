@@ -37,6 +37,12 @@ public class TodoService implements ITodoService {
         return iTodoDao.getCurrentUserTodos();
     }
 
+    @Override
+    public void changeTodoStatus(Todo todo) {
+        iTodoDao.changeTodoStatus(todo);
+    }
+
+
     public void setITodoDao(ITodoDao ITodoDao) {  this.iTodoDao = ITodoDao; }
 
     public Todo getTodo() { return todo;  }

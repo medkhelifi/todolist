@@ -17,14 +17,12 @@
                         <h:form  prependId="false">
                             <b:dropMenu value="#{authenticationFacade.getAuthenticatedFacade().firstname} #{authenticationFacade.getAuthenticatedFacade().lastname}">
                                 <b:navCommandLink value="Logout" action="#{loginManager.doLogout()}"/>
-
                             </b:dropMenu>
                         </h:form>
                     </b:navbarLinks>
                 </b:navBar>
             </b:row>
-            <b:row>
-
+            <b:row id="mainRow">
                 <b:column colMd="6">
                     <div class="todolist not-done">
                         <h1>Todos</h1>
@@ -39,17 +37,23 @@
                         </h:form>
 
                         <hr/>
-                        <ul class="list-unstyled" >
-                            <ui:repeat value="#{todoService.currentUserTodos}" var="todo"  >
-                                <h:panelGroup rendered="#{!todo.done}">
-                                    <li class="ui-state-default">
-                                        <div class="checkbox">
-                                            <label><input type="checkbox" value="" />#{todo.title}</label>
-                                        </div>
-                                    </li>
-                                </h:panelGroup>
-                            </ui:repeat>
-                        </ul>
+                        <h:form id="undoneForm">
+                            <ul class="list-unstyled">
+                                <ui:repeat value="#{todoService.currentUserTodos}" var="todo" >
+                                    <h:panelGroup rendered="#{!todo.done}" id="undonePanel">
+                                            <li class="ui-state-default">
+                                                <div class="checkbox">
+                                                    <b:commandButton styleClass="btn btn-primary" iconAwesome="thumbs-up">
+                                                        <f:ajax execute="@this" onevent="" listener="#{todoService.changeTodoStatus(todo)}" render="@form, doneForm"/>
+                                                    </b:commandButton>
+                                                    <label> #{todo.title}  </label>
+                                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                                </div>
+                                            </li>
+                                    </h:panelGroup>
+                                </ui:repeat>
+                            </ul>
+                        </h:form>
                         <div class="todo-footer">
                             <strong><span class="count-todos"/></strong> Items Left
                         </div>
@@ -58,13 +62,20 @@
                 <b:column colMd="6">
                     <div class="todolist">
                         <h1>Already Done</h1>
-                        <ul id="done-items" class="list-unstyled">
-                            <ui:repeat value="#{todoService.currentUserTodos}" var="todo"  >
-                                <h:panelGroup rendered="#{todo.done}">
-                                    <li>#{todo.title} <button class="remove-item btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-remove"/></button></li>
-                                </h:panelGroup>
-                            </ui:repeat>
-                        </ul>
+                        <h:form id="doneForm">
+                            <ul id="done-items" class="list-unstyled">
+                                <ui:repeat value="#{todoService.currentUserTodos}" var="todo"  >
+                                    <h:panelGroup rendered="#{todo.done}">
+                                            <li>#{todo.title}
+                                                <b:commandButton styleClass="btn btn-default btn-xs pull-right" iconAwesome="remove">
+                                                    <f:ajax execute="@this" listener="#{todoService.changeTodoStatus(todo)}" render="@form, undoneForm"/>
+                                                </b:commandButton>
+                                            </li>
+                                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                    </h:panelGroup>
+                                </ui:repeat>
+                            </ul>
+                        </h:form>
 
                     </div>
                 </b:column>

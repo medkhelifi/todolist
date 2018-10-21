@@ -9,12 +9,13 @@
       >
 
 <h:head>
-    <h:outputStylesheet library="css" name="styles.css"/>
+    <h:outputStylesheet library="css" name="styles.css" position="last"/>
+    <h:outputScript  name="js/faces.js"/>
 </h:head>
 <h:body>
     <b:container>
         <ui:insert name="header">
-            <ui:include src="header.xhtml"></ui:include>
+            <ui:include src="header.xhtml"/>
         </ui:insert>
         <ui:insert name="content">
         </ui:insert>

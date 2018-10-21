@@ -46,5 +46,11 @@ public class TodoDao implements ITodoDao {
         addTodo(todo, authenticationFacade.getAuthenticatedFacade());
     }
 
+    @Override
+    public void changeTodoStatus(Todo todo) {
+        todo.setDone(!todo.isDone());
+        sessionFactory.getCurrentSession().update(todo);
+    }
+
 
 }
