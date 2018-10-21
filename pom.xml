@@ -6,7 +6,7 @@
 
     <groupId>com.medkhelifi.tutorials</groupId>
     <artifactId>todolist</artifactId>
-    <version>0.4.0</version>
+    <version>0.4.1</version>
     <build>
         <plugins>
             <plugin>
