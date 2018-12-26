@@ -27,15 +27,22 @@ public class TodoService implements ITodoService {
     }
 
     @Override
-    public void addTodoForCurrentUser() {
-        iTodoDao.addTodoForCurrentUser(this.todo);
+    public Todo addTodoForCurrentUser() {
+        Todo todo = iTodoDao.addTodoForCurrentUser(this.todo);
         this.todo = new Todo();
+        return todo;
     }
 
     @Override
     public List<Todo> getCurrentUserTodos() {
         return iTodoDao.getCurrentUserTodos();
     }
+
+    @Override
+    public List<Todo> getTodosByUserId(int userId) {
+        return iTodoDao.getTodosByUserId(userId);
+    }
+
 
     @Override
     public void changeTodoStatus(Todo todo) {

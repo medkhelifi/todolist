@@ -1,0 +1,2 @@
+This is test for a file will be reading by FileReader
+Hello

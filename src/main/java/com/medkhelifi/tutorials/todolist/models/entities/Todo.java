@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table (name = "todo")
+@Table (name = "todo", schema = "TODOLIST")
 public class Todo {
 
     private int id;

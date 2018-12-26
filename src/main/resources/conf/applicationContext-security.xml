@@ -6,10 +6,11 @@
 	http://www.springframework.org/schema/security
 	http://www.springframework.org/schema/security/spring-security-4.0.xsd">
 
-    <http auto-config="true">
-        <intercept-url pattern="/login*" access="permitAll()"/>
-        <intercept-url pattern="/javax.faces.resource/**" access="permitAll()"/>
 
+    <http auto-config="true" pattern="/javax.faces.resource/**" security="none"/>
+    <http auto-config="true" use-expressions="true">
+        <intercept-url pattern="/login*" access="permitAll()"/>
+        <!--<intercept-url pattern="/javax.faces.resource/**"  access="permitAll"/>-->
         <intercept-url pattern="/**" access="isAuthenticated()" />
 
 
@@ -20,20 +21,24 @@
                 default-target-url="/index.xhtml"
                 authentication-failure-url="/login.xhtml?error"
                 login-processing-url="/j_spring_security_check"
+
                 username-parameter="input_username"
                 password-parameter="input_password" />
         <logout
                 logout-success-url="/login.xhtml"
         />
-        <!-- enable csrf protection -->
+        <!-- ENABLE CSRF PROTECTION  -->
         <csrf />
-
     </http>
 
     <authentication-manager>
-        <authentication-provider user-service-ref="myUserDetailsService">
+        <authentication-provider user-service-ref="userDetailsService">
             <password-encoder hash="bcrypt"/>
         </authentication-provider>
     </authentication-manager>
+
+    <!--    GLOBAL METHOD SECURITY CONFIG                  -->
+    <global-method-security pre-post-annotations="enabled"/>
+
 
 </beans:beans>

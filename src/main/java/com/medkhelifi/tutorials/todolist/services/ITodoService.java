@@ -7,10 +7,8 @@ import java.util.List;
 
 public interface ITodoService {
     void addTodo(User user);
-
-    void addTodoForCurrentUser ();
-
+    Todo addTodoForCurrentUser ();
     List<Todo> getCurrentUserTodos();
-
+    List<Todo> getTodosByUserId(int userId);
     void changeTodoStatus(Todo todo);
 }

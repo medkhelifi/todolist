@@ -6,7 +6,7 @@
 
     <groupId>com.medkhelifi.tutorials</groupId>
     <artifactId>todolist</artifactId>
-    <version>0.4.1</version>
+    <version>0.5.0-SNAPSHOT</version>
     <build>
         <plugins>
             <plugin>
@@ -97,7 +97,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
+            <artifactId>spring-context-support</artifactId>
         </dependency>
 
         <!--            SPRING ASPECTS                    -->
@@ -110,6 +110,11 @@
         <!--            SPRING SECURITY                   -->
         <dependency>
             <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>${org.springframework.security}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
             <version>${org.springframework.security}</version>
         </dependency>
@@ -119,6 +124,7 @@
             <version>${org.springframework.security}</version>
         </dependency>
 
+
         <!--            HIBERNATE                         -->
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -126,14 +132,37 @@
             <version>${org.hibernate}</version>
         </dependency>
 
-        <!--            JUNIT                             -->
+        <!--            TESTS DEPENDENCIES                  -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>1.10.19</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <version>${org.springframework.security}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.197</version>
         </dependency>
 
-        <!--            MYSQL                             -->
+        <!--            DATABASES                               -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>

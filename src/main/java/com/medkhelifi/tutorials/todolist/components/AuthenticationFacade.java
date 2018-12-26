@@ -11,9 +11,14 @@ import org.springframework.stereotype.Component;
 public class AuthenticationFacade implements IAuthenticationFacade {
 
     @Autowired
+    DocumentProcessorService documentProcessorService;
+
+    @Autowired
     private IUserDao IUserDao;
 
     public Authentication getAuthentication() {
+        DocumentProcessor documentProcessor = documentProcessorService.getDocumentProcessor(DocumentType.TYPE_X);
+        documentProcessor.hwoImI();
         return SecurityContextHolder.getContext().getAuthentication();
     }
 

@@ -3,6 +3,7 @@ package com.medkhelifi.tutorials.todolist.models.entities;
 import javax.persistence.*;
 
 @Entity
+@Table (name = "user", schema = "todolist")
 public class User {
     private int id;
     private String username;

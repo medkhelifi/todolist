@@ -1,11 +1,13 @@
 package com.medkhelifi.tutorials.todolist.models.dao;
 
 import com.medkhelifi.tutorials.todolist.components.AuthenticationFacade;
-import com.medkhelifi.tutorials.todolist.models.dao.ITodoDao;
 import com.medkhelifi.tutorials.todolist.models.entities.Todo;
 import com.medkhelifi.tutorials.todolist.models.entities.User;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostFilter;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.prepost.PreFilter;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,13 +24,14 @@ public class TodoDao implements ITodoDao {
     private AuthenticationFacade authenticationFacade;
 
     @Override
+    //@PostFilter("filterObject.userId == @authenticationFacade.getAuthenticatedFacade().id")
+    @PostFilter("false")
     public List<Todo> getTodosByUserId(int userId) {
-        List todos= null;
-        todos = sessionFactory.getCurrentSession().createQuery("from Todo where userId = ?").setParameter(0, userId).list();
-        return todos;
+        return sessionFactory.getCurrentSession().createQuery("from Todo where userId = ?").setParameter(0, userId).list();
     }
 
     @Override
+    //@PostFilter("filterObject.userByUserId == @authenticationFacade.getAuthenticatedFacade()")
     public List<Todo> getCurrentUserTodos() {
         User user = authenticationFacade.getAuthenticatedFacade();
         return getTodosByUserId(user.getId());
@@ -36,21 +39,25 @@ public class TodoDao implements ITodoDao {
     }
 
     @Override
-    public void addTodo(Todo todo, User user) {
+    @PreAuthorize("#todo.userByUserId == @authenticationFacade.getAuthenticatedFacade()")
+    public Todo addTodo(Todo todo, User user) {
         todo.setUserByUserId(user);
-        sessionFactory.getCurrentSession().save(todo);
+        return (Todo) sessionFactory.getCurrentSession().save(todo);
     }
 
     @Override
-    public void addTodoForCurrentUser(Todo todo) {
-        addTodo(todo, authenticationFacade.getAuthenticatedFacade());
+    public Todo addTodoForCurrentUser(Todo todo) {
+        return addTodo(todo, authenticationFacade.getAuthenticatedFacade());
     }
 
     @Override
+    @PreAuthorize("#todo.userByUserId == @authenticationFacade.getAuthenticatedFacade()")
     public void changeTodoStatus(Todo todo) {
         todo.setDone(!todo.isDone());
         sessionFactory.getCurrentSession().update(todo);
     }
 
-
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 }

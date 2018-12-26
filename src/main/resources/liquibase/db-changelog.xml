@@ -19,7 +19,7 @@
         <comment>Create User's Role Table</comment>
     </changeSet>
 
-    <!-- INSERT ROLE DEFAULT DATA -->
+    <!-- INSERT ROLE DEFAULT DATAs -->
     <changeSet id="002" author="medKhelifi">
         <insert tableName="role">
             <column name="name" value="ADMIN"/>
@@ -109,8 +109,36 @@
                                  onUpdate="CASCADE"
                                  onDelete="CASCADE"/>
     </changeSet>
+    
+    <!-- CHANGE THE TYPE OF THE COLUMN DUE_DATE FROM TODOLIST TABLE -->
     <changeSet id="009" author="medKhelifi">
         <modifyDataType tableName="todo" columnName="due_date" newDataType="datetime"/>
     </changeSet>
+    
+    <!-- UPDATE ROLE DEFAULT DATAs -->
+    <changeSet id="010" author="medKhelifi">
+        <update tableName="role">
+            <column name="name" value="ROLE_ADMIN"/>
+            <where>name = "ADMIN"</where>
+        </update>
+    </changeSet>
+    <changeSet id="011" author="medKhelifi">
+        <update tableName="role">
+            <column name="name" value="ROLE_USER"/>
+            <where>name = "USER"</where>
+        </update>
+    </changeSet>
+
+    <!-- CREATE A NEW USER WITH ROLE_USER -->
+    <changeSet id="012" author="medKhelifi">
+        <insert tableName="user">
+            <column name="username" value="user"/>
+            <column name="firstname" value="Bilel"/>
+            <column name="lastname" value="BOUALI"/>
+            <column name="password" value="$2a$10$04TVADrR6/SPLBjsK0N30.Jf5fNjBugSACeGv1S69dZALR7lSov0y"/>
+            <column name="role_id" value="2"/>
+        </insert>
+    </changeSet>
+
 
 </databaseChangeLog>

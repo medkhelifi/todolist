@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context-3.1.xsd
+                        http://www.springframework.org/schema/tx
+                        http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+                        http://www.springframework.org/schema/jdbc
+                        http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+                        http://www.springframework.org/schema/security
+	                    http://www.springframework.org/schema/security/spring-security-4.0.xsd">
+
+    <!--    GLOBAL METHOD SECURITY CONFIG                  -->
+    <security:global-method-security pre-post-annotations="enabled"/>
+
+    <context:property-placeholder location="classpath:db/database.properties"/>
+    <context:annotation-config />
+
+
+    <!--        DATASOURCE                      -->
+    <jdbc:embedded-database id="h2dataSource" type="H2">
+        <jdbc:script location="classpath:db/sql/create-db.sql" />
+        <jdbc:script location="classpath:db/sql/insert-data.sql" />
+    </jdbc:embedded-database>
+
+    <!-- SESSION FACTORY -->
+    <bean id="testSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="h2dataSource"/>
+        <property name="packagesToScan" value="com.medkhelifi.tutorials.todolist.models.entities"/>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect"> ${hibernate.dialect} </prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.show_sql">true</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- MUST have transaction manager, using aop and aspects  -->
+    <bean id="testTransactionManager"
+          class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="testSessionFactory" />
+    </bean>
+    <tx:annotation-driven transaction-manager="testTransactionManager" />
+
+</beans>

@@ -10,9 +10,9 @@ public interface ITodoDao {
 
     List<Todo> getCurrentUserTodos();
 
-    void addTodo(Todo todo, User user);
+    Todo addTodo(Todo todo, User user);
 
-    void addTodoForCurrentUser (Todo todo);
+    Todo addTodoForCurrentUser (Todo todo);
 
     void changeTodoStatus(Todo todo);
 }

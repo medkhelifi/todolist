@@ -18,6 +18,7 @@
                             <b:dropMenu value="#{authenticationFacade.getAuthenticatedFacade().firstname} #{authenticationFacade.getAuthenticatedFacade().lastname}">
                                 <b:navCommandLink value="Logout" action="#{loginManager.doLogout()}"/>
                             </b:dropMenu>
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                         </h:form>
                     </b:navbarLinks>
                 </b:navBar>
@@ -39,7 +40,7 @@
                         <hr/>
                         <h:form id="undoneForm">
                             <ul class="list-unstyled">
-                                <ui:repeat value="#{todoService.currentUserTodos}" var="todo" >
+                                <ui:repeat value="#{todoService.getTodosByUserId(3)}" var="todo" >
                                     <h:panelGroup rendered="#{!todo.done}" id="undonePanel">
                                             <li class="ui-state-default">
                                                 <div class="checkbox">
